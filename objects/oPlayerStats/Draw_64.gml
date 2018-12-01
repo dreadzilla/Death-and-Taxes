@@ -13,5 +13,9 @@ if (room == rTitle) {
 }
 
 if (room != rTitle) {
-	
+	for (var i = 1; i <= hp; ++i) {
+		draw_sprite_ext(sLife, 0, (i*25) -10 , 15, 1, 1, 0, c_white, 1);	
+	}
+	// Draw score
+	draw_set_font(fScore);
 }
