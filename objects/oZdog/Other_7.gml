@@ -7,6 +7,7 @@ if (state == zdog.idle) {
 	}
 	move(oSolid);
 	state = zdog.jump;
+	audio_play_sound(aZdog,4,false);
 	
 }
 

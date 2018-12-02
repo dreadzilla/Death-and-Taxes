@@ -143,6 +143,10 @@ switch (state) {
 		
 		break;
 	}
+	
+	case player.noop:
+		sprite_index = sPlayer_idle;
+	break;
 
 #endregion
 

@@ -8,6 +8,7 @@ switch (state) {
 			var dis = distance_to_object(oPlayer);
 			if (dis < sight and alarm[0] <= 0) 
 			{
+				show_debug_message("dog attention")
 				image_speed = .5;
 				if (oPlayer.x != x) {
 					image_xscale = sign(oPlayer.x - x);	
@@ -33,6 +34,10 @@ switch (state) {
 				image_index = 0;
 			}
 		}
+		if (xspd != 0) {
+			image_xscale = sign(xspd);	
+		}
+		move(oSolid);
 	 	break;
 	}
 #endregion
