@@ -6,6 +6,7 @@ yspd = 0;
 acc = 1; // Acceleration
 gravity_acc = .5;
 jump_height = -9;
+hascontrol = true;
 
 enum player {
 	moving,

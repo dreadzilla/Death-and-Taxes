@@ -1,0 +1,3 @@
+/// @description Take damage
+
+takedamage();

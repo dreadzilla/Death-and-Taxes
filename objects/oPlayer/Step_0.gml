@@ -1,14 +1,14 @@
 /// @description Controlling the player
 
-
+if (hascontrol) {
 #region Set up controls for the player
-right = keyboard_check(ord("D"));
-left = keyboard_check(ord("A"));
-up = keyboard_check(vk_space);
-down = keyboard_check(ord("S"));
-up_release = keyboard_check_released(vk_space);
+	right = keyboard_check(ord("D"));
+	left = keyboard_check(ord("A"));
+	up = keyboard_check(vk_space);
+	down = keyboard_check(ord("S"));
+	up_release = keyboard_check_released(vk_space);
 #endregion
-
+}
 
 #region State Machine
 switch (state) {
@@ -52,15 +52,7 @@ switch (state) {
 		xspd = clamp(xspd, -max_spd, max_spd);
 	}
 	else {
-		//apply_friction(acc);
-		if (xspd != 0) {
-			if (abs(xspd) - acc > 0) {
-				xspd -= acc * image_xscale;
-			}
-			else {
-				xspd = 0;
-			}
-		}
+		applyfriction(acc);
 	}
 	
 	if (place_meeting(x, y + yspd + 1, oSolid) and yspd > 0) {
@@ -96,6 +88,30 @@ switch (state) {
 	//}
 	
 	break;
+	case player.hurt:
+	{
+		
+		if(xspd != 0) {
+			image_xscale = sign(xspd);	
+		}
+		if (!place_meeting(x,y+1,oSolid)) {
+			yspd += gravity_acc;	
+		} else {
+			yspd = 0;
+			applyfriction(acc);
+		}
+		directionMoveBounce(oSolid);
+		if (xspd == 0 and yspd == 0) {
+			if (oPlayerStats.hp <= 0) {
+				state = player.death;	
+			} else {
+				image_blend = c_white;
+				state = player.moving;
+			}
+		}
+		
+		break;	
+	}
 #endregion
 
 
