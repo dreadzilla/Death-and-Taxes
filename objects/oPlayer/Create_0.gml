@@ -7,9 +7,11 @@ acc = 1; // Acceleration
 gravity_acc = .5;
 jump_height = -9;
 hascontrol = true;
+grab_width = 20;
 
 enum player {
 	moving,
+	ledgegrab,
 	door,
 	hurt,
 	death

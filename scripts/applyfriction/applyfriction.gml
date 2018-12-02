@@ -1,7 +1,7 @@
 /// @desc applyfriction(acceleration)
 /// @arg acceleration How fast to slow down
 
-var acc = argument[0];
+var acc = argument0;
 
 if (xspd != 0) {
 	if (abs(xspd) - acc > 0) {

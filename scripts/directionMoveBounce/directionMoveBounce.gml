@@ -18,8 +18,8 @@ if (place_meeting(x, y + yspd, object_to_move)) {
 		y += sign(yspd);
 	}
 	yspd = -(yspd/4);
-	if (abs(yspd) < 2) {
-	 yspeed = 0;	
+	if (abs(yspd) < 4) {
+	 yspd = 0;	
 	}
 }
 

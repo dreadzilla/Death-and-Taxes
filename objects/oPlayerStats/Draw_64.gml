@@ -25,4 +25,5 @@ if (room != rTitle) {
 	draw_set_halign(fa_left);
 	draw_text_color(25*3 + 10+1, 0+1, "Score: " + string(coins), c_black, c_black, c_black, c_black, 1);
 	draw_text_color(25*3 + 10, 0, "Score: " + string(coins), c_white, c_white, c_white, c_white, 1);
+	
 }

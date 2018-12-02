@@ -61,36 +61,52 @@ switch (state) {
 	
 	move(oSolid);
 	
-	////Check for ledge grab state
-	//var falling = y - yprevious > 0;
-	//var wasnt_wall = !position_meeting(x + grab_width * image_xscale, yprevious, oSolid);
-	//var is_wall = position_meeting(x + grab_width * image_xscale, y, oSolid);
+	//Check for ledge grab state
+	var falling = y - yprevious > 0;
+	var wasnt_wall = !position_meeting(x + grab_width * image_xscale, yprevious, oSolid);
+	var is_wall = position_meeting(x + grab_width * image_xscale, y, oSolid);
 	
-	//if (falling and wasnt_wall and is_wall) {
-	//	xspd = 0;
-	//	yspd = 0;
+	if (falling and wasnt_wall and is_wall) {
+		xspd = 0;
+		yspd = 0;
 		
-	//	//Move against the ledge
-	//	while (!place_meeting(x + image_xscale, y, oSolid)) {
-	//		x += image_xscale;
-	//	}
+		//Move against the ledge
+		while (!place_meeting(x + image_xscale, y, oSolid)) {
+			x += image_xscale;
+		}
 		
-	//	//Check vertical position
-	//	while (position_meeting(x + grab_width * image_xscale, y - 1, oSolid)) {
-	//		y -= 1;
-	//	}
+		//Check vertical position
+		while (position_meeting(x + grab_width * image_xscale, y - 1, oSolid)) {
+			y -= 1;
+		}
 		
-	//	//Change sprite and state
-	//	sprite_index = s_player_ledge_grab;
-	//	state = player.ledge_grab;
+		//Change sprite and state
+		sprite_index = sPlayer_ledge_grab;
+		state = player.ledgegrab;
 		
-	//	audio_play_sound(a_step, 6, false);
-	//}
+		audio_play_sound(aStep, 6, false);
+	}
 	
 	break;
+#endregion
+#region Ledge Grab state
+	case player.ledgegrab:
+	{
+		if (down) {
+			state = player.moving;
+		}
+		if (up) {
+			state = player.moving;
+			yspd = jump_height;
+		}
+	}
+	break;
+#endregion
+
+#region Hurt State
 	case player.hurt:
 	{
-		
+		sprite_index = sPlayer_hurt;
 		if(xspd != 0) {
 			image_xscale = sign(xspd);	
 		}
@@ -101,7 +117,7 @@ switch (state) {
 			applyfriction(acc);
 		}
 		directionMoveBounce(oSolid);
-		if (xspd == 0 and yspd == 0) {
+		if ((xspd == 0 and yspd == 0) or oPlayerStats.hp <= 0) {
 			if (oPlayerStats.hp <= 0) {
 				state = player.death;	
 			} else {
@@ -112,6 +128,22 @@ switch (state) {
 		
 		break;	
 	}
+#endregion
+#region Death State
+	case player.death:
+	{
+		with(oPlayerStats) {
+			hp = max_hp;
+			coins = 0;
+		}
+		
+		if (alarm[0] < 0) {
+			alarm[0] = room_speed;
+		}
+		
+		break;
+	}
+
 #endregion
 
 
