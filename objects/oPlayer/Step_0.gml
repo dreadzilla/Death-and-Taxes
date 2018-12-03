@@ -119,7 +119,11 @@ switch (state) {
 		directionMoveBounce(oSolid);
 		if ((xspd == 0 and yspd == 0) or oPlayerStats.hp <= 0) {
 			if (oPlayerStats.hp <= 0) {
-				state = player.death;	
+				state = player.death;
+				if (instance_exists(oGun)) {
+					oGun.state = gun.hasnot;
+					instance_destroy(oGun);
+				}
 			} else {
 				image_blend = c_white;
 				state = player.moving;
@@ -132,13 +136,14 @@ switch (state) {
 #region Death State
 	case player.death:
 	{
-		with(oPlayerStats) {
-			hp = max_hp;
-			coins = 0;
-		}
 		
 		if (alarm[0] < 0) {
 			alarm[0] = room_speed;
+		}
+		
+		with(oPlayerStats) {
+			hp = max_hp;
+			coins = 0;
 		}
 		
 		break;
